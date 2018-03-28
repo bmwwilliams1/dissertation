@@ -13,7 +13,6 @@ import scipy.misc
 import scipy
 
 import numpy as np
-import h5py
 from keras.preprocessing.image import ImageDataGenerator
 from keras.datasets import mnist
 # import dataprocessing
