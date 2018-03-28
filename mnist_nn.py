@@ -85,6 +85,10 @@ X_val = X_train[val_row:]
 y_val = y_train[val_row:]
 X_train = X_train[:val_row]
 
+X_val /= 255
+X_test /=255
+Xtrain /=255
+
 y_train = y_train[:val_row]
 
 # print("x_train shape: ",X_train.shape)
@@ -96,9 +100,9 @@ y_val = np_utils.to_categorical(y_train, classes)
 y_test = np_utils.to_categorical(y_test, classes)
 
 generate = ImageDataGenerator(
-    featurewise_center=True,  # set input mean to 0 over the dataset
+    featurewise_center=False,  # set input mean to 0 over the dataset
     samplewise_center=False,  # set each sample mean to 0
-    featurewise_std_normalization=True,  # divide inputs by std of the dataset
+    featurewise_std_normalization=False,  # divide inputs by std of the dataset
     samplewise_std_normalization=False,  # divide each input by its std
     rotation_range=20,  # randomly rotate images in the range (degrees, 0 to 180)
     width_shift_range=0.2,  # randomly shift images horizontally (fraction of total width)
