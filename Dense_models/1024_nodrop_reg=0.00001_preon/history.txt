@@ -1,0 +1,43 @@
+Dense Model History
+
+Optimum Model:
+Hidden neurons: 1024
+l2 reg: 0.00001
+dropout: No
+preprocessing: Yes
+
+01 - 9781
+02 - 9791
+03 - 9817
+test: 9615
+
+Model 2:
+Hidden neurons: 1024
+l2 reg: No
+dropout: No
+preprocessing: Yes
+
+01 - 9802
+test: 9765
+
+Model 3:
+Hidden neurons: 1024
+l2 reg: 0.0001
+dropout: No
+preprocessing: Yes
+
+01-9655
+03-9679
+04-9699
+test: 9685
+
+Model 4:
+Hidden neurons: 512
+l2 reg: 0.0001
+dropout: No
+preprocessing: Yes
+
+01-9591
+02-9635
+03-9647
+test: 9603
