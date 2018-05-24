@@ -18,7 +18,7 @@ dropout: No
 preprocessing: Yes
 
 01 - 9802
-test: 9765
+test: 9665
 
 Model 3:
 Hidden neurons: 1024

@@ -25,7 +25,7 @@ from keras.constraints import non_neg
 def cnn():
 
     ep = 0.000001
-    lamb = 0.00001
+    lamb = 0.0000
     p = 0.2
     p2 = 0.5
     learn_rate = 1
@@ -49,10 +49,10 @@ def cnn():
     cnn.add(Flatten(input_shape = (width, height,1)))
     # cnn.add(Dense(512,kernel_regularizer = l2(lamb)))#,kernel_constraint=non_neg(), kernel_initializer=RandomUniform(minval=0, maxval=0.15, seed=None)))
     # cnn.add(Activation('relu'))
-    cnn.add(Dense(1024,kernel_regularizer = l2(lamb)))#,kernel_constraint=non_neg(), kernel_initializer=RandomUniform(minval=0, maxval=0.15, seed=None)))
+    cnn.add(Dense(1024,kernel_regularizer = l2(lamb),kernel_constraint=non_neg()))#,kernel_constraint=non_neg(), kernel_initializer=RandomUniform(minval=0, maxval=0.15, seed=None)))
     cnn.add(Activation('relu'))
     # cnn.add(Dropout(p2))
-    cnn.add(Dense(10))#,kernel_constraint=non_neg(), kernel_initializer=RandomUniform(minval=0, maxval=0.15, seed=None)))
+    cnn.add(Dense(10,kernel_constraint=non_neg()))#,kernel_constraint=non_neg(), kernel_initializer=RandomUniform(minval=0, maxval=0.15, seed=None)))
     cnn.add(Activation('softmax'))
 
 
@@ -110,9 +110,9 @@ generate = ImageDataGenerator(
     samplewise_center=False,  # set each sample mean to 0
     featurewise_std_normalization=False,  # divide inputs by std of the dataset
     samplewise_std_normalization=False,  # divide each input by its std
-    rotation_range=25,  # randomly rotate images in the range (degrees, 0 to 180)
-    width_shift_range=0.15,  # randomly shift images horizontally (fraction of total width)
-    height_shift_range=0.15,  # randomly shift images vertically (fraction of total height)
+    rotation_range=0.0,  # randomly rotate images in the range (degrees, 0 to 180)
+    width_shift_range=0.0,  # randomly shift images horizontally (fraction of total width)
+    height_shift_range=0.0,  # randomly shift images vertically (fraction of total height)
     horizontal_flip=False,  # randomly flip images
     vertical_flip=False)  # randomly flip images
 
