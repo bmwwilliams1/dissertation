@@ -49,7 +49,7 @@ def cnn():
     cnn.add(Flatten(input_shape = (width, height,1)))
     # cnn.add(Dense(512,kernel_regularizer = l2(lamb)))#,kernel_constraint=non_neg(), kernel_initializer=RandomUniform(minval=0, maxval=0.15, seed=None)))
     # cnn.add(Activation('relu'))
-    cnn.add(Dense(1024,kernel_regularizer = l2(lamb),kernel_constraint=non_neg()))#,kernel_constraint=non_neg(), kernel_initializer=RandomUniform(minval=0, maxval=0.15, seed=None)))
+    cnn.add(Dense(512,kernel_regularizer = l2(lamb),kernel_constraint=non_neg()))#,kernel_constraint=non_neg(), kernel_initializer=RandomUniform(minval=0, maxval=0.15, seed=None)))
     cnn.add(Activation('relu'))
     # cnn.add(Dropout(p2))
     cnn.add(Dense(10,kernel_constraint=non_neg()))#,kernel_constraint=non_neg(), kernel_initializer=RandomUniform(minval=0, maxval=0.15, seed=None)))
