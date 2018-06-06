@@ -25,7 +25,7 @@ from keras.constraints import non_neg
 def cnn():
 
     ep = 0.000001
-    lamb = 0.0000
+    lamb = 0.00001
     p = 0.2
     p2 = 0.5
     learn_rate = 1
@@ -49,10 +49,10 @@ def cnn():
     cnn.add(Flatten(input_shape = (width, height,1)))
     # cnn.add(Dense(512,kernel_regularizer = l2(lamb)))#,kernel_constraint=non_neg(), kernel_initializer=RandomUniform(minval=0, maxval=0.15, seed=None)))
     # cnn.add(Activation('relu'))
-    cnn.add(Dense(512,kernel_regularizer = l2(lamb),kernel_constraint=non_neg()))#,kernel_constraint=non_neg(), kernel_initializer=RandomUniform(minval=0, maxval=0.15, seed=None)))
+    cnn.add(Dense(128,kernel_regularizer = l2(lamb)))#,kernel_constraint=non_neg()))#,kernel_constraint=non_neg(), kernel_initializer=RandomUniform(minval=0, maxval=0.15, seed=None)))
     cnn.add(Activation('relu'))
     # cnn.add(Dropout(p2))
-    cnn.add(Dense(10,kernel_constraint=non_neg()))#,kernel_constraint=non_neg(), kernel_initializer=RandomUniform(minval=0, maxval=0.15, seed=None)))
+    cnn.add(Dense(10))#,kernel_constraint=non_neg()))#,kernel_constraint=non_neg(), kernel_initializer=RandomUniform(minval=0, maxval=0.15, seed=None)))
     cnn.add(Activation('softmax'))
 
 
