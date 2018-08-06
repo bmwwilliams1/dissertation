@@ -1,0 +1,115 @@
+512 neurons
+
+
+POSITIVE ONLY
+lamb = 0
+01 - 9636
+03- 9737
+test = 98.80
+
+lamb = 0.00001
+01 - 9549
+02 - 9699
+test = 98.40
+
+lamb = 0.000001
+01 - 9688
+02 - 9741
+
+test = 98.83
+
+UNCONSTRAINED
+lamb = 0
+01 - 9847
+test = 99.7
+
+
+lamb = 0.0001
+01 - 9772
+02 - 9762
+test = 99.0
+
+lamb = 0.000001
+01 - 9850
+test = 99.60
+
+
+256 neurons
+
+
+POSITIVE ONLY
+lamb = 0
+01 -
+03-
+test =
+
+lamb = 0.00001
+01 -
+02 -
+test =
+
+lamb = 0.000001
+01 - 9636
+02 - 9647
+03 - 9718
+04 -
+
+test = 98.7
+
+UNCONSTRAINED
+lamb = 0
+01 - 9835
+
+test = 99.5
+
+
+lamb = 0.00001
+01 - 98.24
+02 -
+test = 99.4
+
+lamb = 0.000001
+01 - 9832
+
+test = 99.5
+
+
+128 neurons
+
+
+POSITIVE ONLY
+lamb = 0
+01 -
+03-
+test =
+
+lamb = 0.00001
+01 -
+02 -
+test =
+
+lamb = 0.000001
+01 - 9538
+02 - 9642
+03 - 9642
+04 - 9693
+
+
+test = 98.3
+
+UNCONSTRAINED
+lamb = 0
+01 - 9835
+
+test = 99.5
+
+
+lamb = 0.00001
+01 - 98.20
+02 -
+test = 99.4
+
+lamb = 0.000001
+01 - 9817
+
+test = 99.6
