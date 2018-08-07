@@ -65,61 +65,67 @@ def cnn():
     cnn.summary()
     return cnn
 
-# ~~~~~~~~~~~~~~~~~~~~~~~ MAIN FILE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+def main():
+    # ~~~~~~~~~~~~~~~~~~~~~~~ MAIN FILE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-depth = 1
-epochs = 5
-classes = 10
-width = height = 28
-batch_size = 32
-val_split = 0.2
-
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# ~~~~~~~~~~~~~~~~~~~~~~~~ DEAL WITH THE DATA ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-(X_train, y_train), (X_test, y_test) = mnist.load_data()
-X_train = X_train.reshape(X_train.shape[0], height, width, depth).astype('float32')
-X_test = X_test.reshape(X_test.shape[0], height, width, depth).astype('float32')
-val_row = int(X_train.shape[0] * 0.8)
-# print(val_row)
-# X_val = X_train[val_row:]
-# y_val = y_train[val_row:]
-# X_train = X_train[:val_row]
-# y_train = y_train[:val_row]
-
-# X_val /= 255
-X_test /=255
-
-X_train /=255
-# print(X_val.shape)
-print(X_train.shape)
-print(X_test.shape)
-
-# print("x_train shape: ",X_train.shape)
-# print("x_val shape: ",X_val.shape)
+    depth = 1
+    epochs = 5
+    classes = 10
+    width = height = 28
+    batch_size = 32
+    val_split = 0.2
 
 
-y_train = np_utils.to_categorical(y_train, classes)
-# y_val = np_utils.to_categorical(y_train, classes)
-y_test = np_utils.to_categorical(y_test, classes)
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    # ~~~~~~~~~~~~~~~~~~~~~~~~ DEAL WITH THE DATA ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-generate = ImageDataGenerator(
-    featurewise_center=False,  # set input mean to 0 over the dataset
-    samplewise_center=False,  # set each sample mean to 0
-    featurewise_std_normalization=False,  # divide inputs by std of the dataset
-    samplewise_std_normalization=False,  # divide each input by its std
-    rotation_range=25,  # randomly rotate images in the range (degrees, 0 to 180)
-    width_shift_range=0.15,  # randomly shift images horizontally (fraction of total width)
-    height_shift_range=0.15,  # randomly shift images vertically (fraction of total height)
-    horizontal_flip=False,  # randomly flip images
-    vertical_flip=False)  # randomly flip images
+    (X_train, y_train), (X_test, y_test) = mnist.load_data()
+    X_train = X_train.reshape(X_train.shape[0], height, width, depth).astype('float32')
+    X_test = X_test.reshape(X_test.shape[0], height, width, depth).astype('float32')
+    val_row = int(X_train.shape[0] * 0.8)
+    # print(val_row)
+    # X_val = X_train[val_row:]
+    # y_val = y_train[val_row:]
+    # X_train = X_train[:val_row]
+    # y_train = y_train[:val_row]
 
-our_model = cnn()
-files='Model.{epoch:02d}-{val_acc:.4f}.hdf5'
-ckpt = keras.callbacks.ModelCheckpoint(files, monitor = 'val_loss',verbose=1, save_best_only=True, mode='auto')
-# print(our_model.summary())
-# generate.fit(X_train)
-our_model.fit_generator(generate.flow(X_train, y_train), steps_per_epoch = X_train.shape[0], epochs=epochs,
-                        validation_data = (X_test,y_test), callbacks = [ckpt])
+    # X_val /= 255
+    X_test /=255
+
+    X_train /=255
+    # print(X_val.shape)
+    print(X_train.shape)
+    print(X_test.shape)
+
+    # print("x_train shape: ",X_train.shape)
+    # print("x_val shape: ",X_val.shape)
+
+
+    y_train = np_utils.to_categorical(y_train, classes)
+    # y_val = np_utils.to_categorical(y_train, classes)
+    y_test = np_utils.to_categorical(y_test, classes)
+
+
+    
+    generate = ImageDataGenerator(
+        featurewise_center=False,  # set input mean to 0 over the dataset
+        samplewise_center=False,  # set each sample mean to 0
+        featurewise_std_normalization=False,  # divide inputs by std of the dataset
+        samplewise_std_normalization=False,  # divide each input by its std
+        rotation_range=25,  # randomly rotate images in the range (degrees, 0 to 180)
+        width_shift_range=0.15,  # randomly shift images horizontally (fraction of total width)
+        height_shift_range=0.15,  # randomly shift images vertically (fraction of total height)
+        horizontal_flip=False,  # randomly flip images
+        vertical_flip=False)  # randomly flip images
+
+    our_model = cnn()
+    files='Model.{epoch:02d}-{val_acc:.4f}.hdf5'
+    ckpt = keras.callbacks.ModelCheckpoint(files, monitor = 'val_loss',verbose=1, save_best_only=True, mode='auto')
+    # print(our_model.summary())
+    # generate.fit(X_train)
+    our_model.fit_generator(generate.flow(X_train, y_train), steps_per_epoch = X_train.shape[0], epochs=epochs,
+                            validation_data = (X_test,y_test), callbacks = [ckpt])
+
+if __name__ == "__main__":
+    main()
