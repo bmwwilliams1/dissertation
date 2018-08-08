@@ -35,8 +35,10 @@ def main():
     # TRAIN, TEST or SAVE
     mode = 'TRAIN'
     load_name = 'Model.01-0.9670_test9745.hdf5'
+
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # ~~~~~~~~~~~~~~~~~~~~~~~~ DEAL WITH THE DATA ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     if mode == 'TRAIN':
 
         (X_train, y_train), (X_test, y_test) = mnist.load_data()

@@ -2,9 +2,9 @@ import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 
-def plot(ax,a,b,i,w):
-    image = np.reshape(w[:,i+102],(28,28))
-    im = ax.pcolormesh(a, -b, image)
+def plot(ax,a,b,i,w,off):
+    image = np.reshape(w[:,i+off],(28,28))
+    im = ax.pcolormesh(a,-b, image)
     # fig.colorbar(im)
     ax.axis('tight')
 
@@ -26,11 +26,16 @@ def metrics(weights):
         mean[i] = sum(pixel)/len(pixel)
         i=i+1
 
+
     diff = np.zeros((len(weights),len(weights[0])),dtype=float)
+
+    # print('start of mean vector: ',mean[0],mean[1],mean[2])
+    # print('mean vector shape: ',len(mean))
 
     for row in range(0,len(weights)):
         for col in range(0,len(weights[0])):
             diff[row,col]=weights[row,col]-mean[row]
+
     # print(len(mean))
     # print('diff dimensions:',len(diff),'x',len(diff[0]))
 
@@ -41,10 +46,10 @@ def metrics(weights):
             for ex in range(0,len(weights)):
                 cov[row,col] = cov[row,col]+(diff[ex,row]*diff[ex,col])
 
+    cov = cov/(len(weights)-1)
+
     # print some of the covariance matrix
 
-
-    cov = cov/(len(weights)-1)
-    print(cov[0,0],',',cov[1,0],',',cov[0,1])
+    # print(cov[0,0],',',cov[1,0],',',cov[0,1])
 
     return mean, cov
