@@ -69,7 +69,7 @@ def main():
             vertical_flip=False)  # randomly flip images
 
 
-        our_model = models.cnn()
+        our_model = models.dsf()
         files='Model.{epoch:02d}-{val_acc:.4f}.hdf5'
         ckpt = keras.callbacks.ModelCheckpoint(files, monitor = 'val_loss',verbose=1, save_best_only=True, mode='auto')
         our_model.fit_generator(generate.flow(X_train, y_train), steps_per_epoch = X_train.shape[0], epochs=epochs,
