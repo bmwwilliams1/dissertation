@@ -37,7 +37,7 @@ def main():
 
     # TRAIN, TEST or SAVE
     mode = 'SAVE'
-    load_name = 'Model.05-0.9315_train933_16.hdf5'
+    load_name = 'Model.01-0.9628_train9670_512.hdf5'
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # ~~~~~~~~~~~~~~~~~~~~~~~~ DEAL WITH THE DATA ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -86,20 +86,20 @@ def main():
 
     if mode == 'SAVE':
         model = load_model(load_name)
-        # print(model.summary())
         i=1
         for layer in model.layers:
             if (layer.get_config()["name"].startswith("dense")):
-                # print(layer.get_config()['name'])
                 weights = layer.get_weights() # list of numpy arrays
-                # print(weights)
                 print('weights dimensions: ',len(weights[0]),'x',len(weights[0][0]))
-                np.savetxt("weights_16_%s.csv"%str(i),weights[0], delimiter=",")
+                np.savetxt("weights_512_%s.csv"%str(i),weights[0], delimiter=",")
                 i=i+1
-        # load_model_weights_hdf5(weights,load_name)
 
-        # np.savetxt("weights_512.csv",weights[0], delimiter=",")
-
+    if mode == 'SUMMARY':
+        model = load_model(load_name)
+        print(model.summary())
+        for layer in model.layers:
+            if (layer.get_config()["name"].startswith("dense")):
+                print(layer.get_config()['name'],':',layer.get_config()['units'])
 
 if __name__ == "__main__":
     main()
