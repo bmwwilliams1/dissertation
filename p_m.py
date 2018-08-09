@@ -8,6 +8,13 @@ def plot(ax,a,b,i,w,off):
     # fig.colorbar(im)
     ax.axis('tight')
 
+def meanplot(ax,a,b,i,w,sizes):
+    image = np.reshape(w,(28,28))
+    im = ax.pcolormesh(a,-b, image)
+    # fig.colorbar(im)
+    ax.axis('tight')
+    ax.set_title(str(sizes[i]))
+
 def distance(a,b):
 
     if not (len(a)==len(b)):
@@ -17,6 +24,16 @@ def distance(a,b):
     for elem in range(0,len(a)-1):
         dist = dist+(a[elem]-b[elem])*(a[elem]-b[elem])
     return np.sqrt(dist)
+
+def mean(weights):
+
+    mean = np.zeros((len(weights[:,0]),),dtype=float)
+    i= 0
+    for pixel in weights:
+        mean[i] = sum(pixel)/len(pixel)
+        i=i+1
+
+    return mean
 
 def metrics(weights):
 
@@ -47,9 +64,5 @@ def metrics(weights):
                 cov[row,col] = cov[row,col]+(diff[ex,row]*diff[ex,col])
 
     cov = cov/(len(weights)-1)
-
-    # print some of the covariance matrix
-
-    # print(cov[0,0],',',cov[1,0],',',cov[0,1])
 
     return mean, cov
