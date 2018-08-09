@@ -7,7 +7,7 @@ import p_m
 
 def main():
 
-    w1 = np.genfromtxt ('./weights_1/weights_1024_1.csv', delimiter=",")
+    w1 = np.genfromtxt ('./weights_1/weights_256_1.csv', delimiter=",")
     # w2 = np.genfromtxt ('weights2.csv', delimiter=",")
     # print('w1 dimensions:',len(w1),'x',len(w1[0]))
     # print('w2 dimensions:',len(w2),'x',len(w2[0]))
@@ -16,8 +16,8 @@ def main():
     save_covariance = False
     run_metrics = False
     graph_components = False
-    graph_average = False
-    graph_multi_avg = True
+    graph_average = True
+    graph_multi_avg = False
 
     sizes = ([1024,512,256,128,64,32,16])
 
@@ -93,9 +93,6 @@ def main():
             fig.suptitle("Mean Images for Hidden Neurons", fontsize=16)
             plt.show()
 
-            # file = './weights_1/weights_%s_1.csv'%sizes[i]
-            # weight = np.genfromtxt ('./weights_1/weights_1024_1.csv', delimiter=",")
-            # mean = p_m.mean(weight)
 
 
 if __name__ == "__main__":
