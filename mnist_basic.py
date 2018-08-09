@@ -19,6 +19,9 @@ from keras.preprocessing.image import ImageDataGenerator
 from keras.datasets import mnist
 from keras.constraints import non_neg
 import models
+from keras.models import load_model
+from keras import layers
+# from keras import load_model_weights_hdf5
 
 # import dataprocessing
 
@@ -33,8 +36,8 @@ def main():
     val_split = 0.2
 
     # TRAIN, TEST or SAVE
-    mode = 'TRAIN'
-    load_name = 'Model.01-0.9670_test9745.hdf5'
+    mode = 'SAVE'
+    load_name = 'Model.05-0.9315_train933_16.hdf5'
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # ~~~~~~~~~~~~~~~~~~~~~~~~ DEAL WITH THE DATA ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -83,11 +86,19 @@ def main():
 
     if mode == 'SAVE':
         model = load_model(load_name)
-        weights = []
+        # print(model.summary())
+        i=1
         for layer in model.layers:
-            weights.append.layer.get_weights() # list of numpy arrays
+            if (layer.get_config()["name"].startswith("dense")):
+                # print(layer.get_config()['name'])
+                weights = layer.get_weights() # list of numpy arrays
+                # print(weights)
+                print('weights dimensions: ',len(weights[0]),'x',len(weights[0][0]))
+                np.savetxt("weights_16_%s.csv"%str(i),weights[0], delimiter=",")
+                i=i+1
+        # load_model_weights_hdf5(weights,load_name)
 
-        np.savetxt("weights.csv",weights, delimiter=",")
+        # np.savetxt("weights_512.csv",weights[0], delimiter=",")
 
 
 if __name__ == "__main__":
