@@ -37,7 +37,7 @@ def main():
 
     # TRAIN, TEST or SAVE
     mode = 'SAVE'
-    load_name = 'Model.01-0.9628_train9670_512.hdf5'
+    load_name = 'Model.01-0.9833_train9999_1024.hdf5'
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # ~~~~~~~~~~~~~~~~~~~~~~~~ DEAL WITH THE DATA ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -72,7 +72,7 @@ def main():
             vertical_flip=False)  # randomly flip images
 
 
-        our_model = models.dsf()
+        our_model = models.ffn()
         files='Model.{epoch:02d}-{val_acc:.4f}.hdf5'
         ckpt = keras.callbacks.ModelCheckpoint(files, monitor = 'val_loss',verbose=1, save_best_only=True, mode='auto')
         our_model.fit_generator(generate.flow(X_train, y_train), steps_per_epoch = X_train.shape[0], epochs=epochs,
@@ -91,7 +91,7 @@ def main():
             if (layer.get_config()["name"].startswith("dense")):
                 weights = layer.get_weights() # list of numpy arrays
                 print('weights dimensions: ',len(weights[0]),'x',len(weights[0][0]))
-                np.savetxt("weights_512_%s.csv"%str(i),weights[0], delimiter=",")
+                np.savetxt("weights_1024_%s.csv"%str(i),weights[0], delimiter=",")
                 i=i+1
 
     if mode == 'SUMMARY':

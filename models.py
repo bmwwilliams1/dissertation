@@ -72,7 +72,7 @@ def ffn():
 
     ffn.add(Flatten(input_shape = (width, height,1)))
 
-    ffn.add(Dense(128,kernel_regularizer = l2(lamb)))#,kernel_constraint=non_neg()))#,kernel_constraint=non_neg(), kernel_initializer=RandomUniform(minval=0, maxval=0.15, seed=None)))
+    ffn.add(Dense(16,kernel_regularizer = l2(lamb)))#,kernel_constraint=non_neg()))#,kernel_constraint=non_neg(), kernel_initializer=RandomUniform(minval=0, maxval=0.15, seed=None)))
     ffn.add(Activation('relu'))
 
     ffn.add(Dense(10))#,kernel_constraint=non_neg()))#,kernel_constraint=non_neg(), kernel_initializer=RandomUniform(minval=0, maxval=0.15, seed=None)))
