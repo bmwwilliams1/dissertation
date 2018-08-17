@@ -7,7 +7,7 @@ import p_m
 
 def main():
 
-    w1 = np.genfromtxt ('./weights_1/weights_256_1.csv', delimiter=",")
+    w1 = np.genfromtxt ('./weights_3/weights_16_1.csv', delimiter=",")
     # w2 = np.genfromtxt ('weights2.csv', delimiter=",")
     # print('w1 dimensions:',len(w1),'x',len(w1[0]))
     # print('w2 dimensions:',len(w2),'x',len(w2[0]))
@@ -34,7 +34,7 @@ def main():
         i = 0
         for sub in ax:
             for subi in sub:
-                p_m.plot(subi,a,b,i,w1,offset)
+                p_m.plot(subi,b,a,i,w1,offset)
                 subi.get_xaxis().set_visible(False)
                 subi.get_yaxis().set_visible(False)
                 i=i+1
