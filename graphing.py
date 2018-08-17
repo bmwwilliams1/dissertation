@@ -7,7 +7,7 @@ import p_m
 
 def main():
 
-    w1 = np.genfromtxt ('./weights_1/weights_256_1.csv', delimiter=",")
+    w1 = np.genfromtxt ('./weights_3/weights_16_1_zero.csv', delimiter=",")
     # w2 = np.genfromtxt ('weights2.csv', delimiter=",")
     # print('w1 dimensions:',len(w1),'x',len(w1[0]))
     # print('w2 dimensions:',len(w2),'x',len(w2[0]))
@@ -15,8 +15,8 @@ def main():
     # image = np.reshape(w1[:,3],(28,28))
     save_covariance = False
     run_metrics = False
-    graph_components = False
-    graph_average = True
+    graph_components = True
+    graph_average = False
     graph_multi_avg = False
 
     sizes = ([1024,512,256,128,64,32,16])
@@ -27,18 +27,18 @@ def main():
         n_points = 28
         a = np.linspace(1, 28, n_points)
         b = np.linspace(1, 28, n_points)
-        a, b = np.meshgrid(a, b)
-        offset = 45
-        dim = 5
+        a, b = np.meshgrid(a,b)
+        offset = 0
+        dim = 4
         fig,ax = plt.subplots(dim,dim)
+        # cbar_ax = fig.add_axes([-1.0, 0.2, 1.0, 0.7])
         i = 0
         for sub in ax:
             for subi in sub:
-                p_m.plot(subi,a,b,i,w1,offset)
+                p_m.plot(subi,b,a,i,w1,offset)
                 subi.get_xaxis().set_visible(False)
                 subi.get_yaxis().set_visible(False)
                 i=i+1
-
         plt.show()
 
     if (run_metrics==True):
@@ -86,7 +86,7 @@ def main():
                 file = './weights_1/weights_%s_1.csv'%sizes[i]
                 weight = np.genfromtxt (file, delimiter=",")
                 mean = p_m.mean(weight)
-                p_m.meanplot(sub,a,b,i,mean,sizes)
+                p_m.meanplot(sub,b,a,i,mean,sizes)
                 sub.get_xaxis().set_visible(False)
                 sub.get_yaxis().set_visible(False)
                 i=i+1
