@@ -4,8 +4,9 @@ import matplotlib.pyplot as plt
 
 def plot(ax,a,b,i,w,off):
     image = np.reshape(w[:,i+off],(28,28))
-    im = ax.pcolormesh(a,-b, image)
-    # fig.colorbar(im)
+    im = ax.pcolormesh(a,-b, image,vmin=0,vmax=1)
+    # if i==0:
+    #     fig.colorbar(im)
     ax.axis('tight')
 
 def meanplot(ax,a,b,i,w,sizes):

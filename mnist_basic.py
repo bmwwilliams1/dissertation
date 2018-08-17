@@ -36,7 +36,7 @@ def main():
     val_split = 0.2
 
     # TRAIN, TEST or SAVE
-    mode = 'SAVE'
+    mode = 'TRAIN'
     load_name = 'Model.01-0.9833_train9999_1024.hdf5'
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -45,6 +45,7 @@ def main():
     if mode == 'TRAIN':
 
         (X_train, y_train), (X_test, y_test) = mnist.load_data()
+        print(X_train.shape)
         X_train = X_train.reshape(X_train.shape[0], height, width, depth).astype('float32')
         X_test = X_test.reshape(X_test.shape[0], height, width, depth).astype('float32')
         val_row = int(X_train.shape[0] * 0.8)
@@ -56,8 +57,19 @@ def main():
         print(X_train.shape)
         print(X_test.shape)
 
+        print(y_train.shape)
+        print(y_test.shape)
+
+        # print(y_train[0:20])
         y_train = np_utils.to_categorical(y_train, classes)
         y_test = np_utils.to_categorical(y_test, classes)
+
+        print(y_train.shape)
+        print(y_test.shape)
+
+        # print(y_train[0:20])
+        # print('X_train:'+str(len(X_train))+'x'+str(len(X_train[0]))+'x'+str(len(X_train[0][0])))
+        # print('y_train:'+str(len(y_train))+'x'+str(len(y_train[0]))+'x'+str(len(y_train[0][0])))
 
         # Selecting the preprocessing if activated
         generate = ImageDataGenerator(
@@ -72,11 +84,11 @@ def main():
             vertical_flip=False)  # randomly flip images
 
 
-        our_model = models.ffn()
-        files='Model.{epoch:02d}-{val_acc:.4f}.hdf5'
-        ckpt = keras.callbacks.ModelCheckpoint(files, monitor = 'val_loss',verbose=1, save_best_only=True, mode='auto')
-        our_model.fit_generator(generate.flow(X_train, y_train), steps_per_epoch = X_train.shape[0], epochs=epochs,
-                                validation_data = (X_test,y_test), callbacks = [ckpt])
+        # our_model = models.ffn()
+        # files='Model.{epoch:02d}-{val_acc:.4f}.hdf5'
+        # ckpt = keras.callbacks.ModelCheckpoint(files, monitor = 'val_loss',verbose=1, save_best_only=True, mode='auto')
+        # our_model.fit_generator(generate.flow(X_train, y_train), steps_per_epoch = X_train.shape[0], epochs=epochs,
+        #                         validation_data = (X_test,y_test), callbacks = [ckpt])
 
     # test run on the test classes
     if mode == 'TEST':
