@@ -15,6 +15,8 @@ import scipy.misc
 import scipy
 import h5py
 import numpy as np
+import random as rd
+import _pickle as pc
 from keras.preprocessing.image import ImageDataGenerator
 from keras.datasets import mnist
 from keras.constraints import non_neg
@@ -24,48 +26,65 @@ from keras import layers
 # from keras import load_model_weights_hdf5
 
 # import dataprocessing
-
 # ~~~~~~~~~~~~~~~~~~~~~~~ MAIN FILE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 def main():
     depth = 1
     epochs = 10
-    classes = 10
-    width = height = 28
     batch_size = 32
     val_split = 0.2
 
     # TRAIN, TEST or SAVE
     mode = 'TRAIN'
+    dataset = 'MNIST'
     load_name = 'Model.01-0.9833_train9999_1024.hdf5'
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # ~~~~~~~~~~~~~~~~~~~~~~~~ DEAL WITH THE DATA ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     if mode == 'TRAIN':
+        if dataset=='MNIST':
+            width = height = 28
+            classes = 10
+            (X_train, y_train), (X_test, y_test) = mnist.load_data()
 
-        (X_train, y_train), (X_test, y_test) = mnist.load_data()
-        print(X_train.shape)
+
+            # val_row = int(X_train.shape[0] * 0.8)
+
+
+        if dataset == 'MATH':
+            width = height = 32
+            classes = 369
+            X_train = pc.load(open("../hasy_data/x_train.pkl","rb"))
+            X_test = pc.load(open("../hasy_data/x_test.pkl","rb"))
+            y_train = np.genfromtxt('../hasy_data/y_train.csv')
+            y_test = np.genfromtxt('../hasy_data/y_test.csv')
+
+
+        # print(X_train.shape)
         X_train = X_train.reshape(X_train.shape[0], height, width, depth).astype('float32')
         X_test = X_test.reshape(X_test.shape[0], height, width, depth).astype('float32')
-        val_row = int(X_train.shape[0] * 0.8)
+
 
         # Rescale the inputs to [0,1]
         X_test /=255
         X_train /=255
-
-        print(X_train.shape)
-        print(X_test.shape)
-
-        print(y_train.shape)
-        print(y_test.shape)
+        print(X_train[0])
+        # print(X_train.shape)
+        # print(X_test.shape)
+        #
+        # print(y_train.shape)
+        # print(y_test.shape)
 
         # print(y_train[0:20])
         y_train = np_utils.to_categorical(y_train, classes)
         y_test = np_utils.to_categorical(y_test, classes)
 
-        print(y_train.shape)
-        print(y_test.shape)
+        # print(y_train.shape)
+        # print(y_test.shape)
+
+
+
 
         # print(y_train[0:20])
         # print('X_train:'+str(len(X_train))+'x'+str(len(X_train[0]))+'x'+str(len(X_train[0][0])))
@@ -84,11 +103,11 @@ def main():
             vertical_flip=False)  # randomly flip images
 
 
-        # our_model = models.ffn()
-        # files='Model.{epoch:02d}-{val_acc:.4f}.hdf5'
-        # ckpt = keras.callbacks.ModelCheckpoint(files, monitor = 'val_loss',verbose=1, save_best_only=True, mode='auto')
-        # our_model.fit_generator(generate.flow(X_train, y_train), steps_per_epoch = X_train.shape[0], epochs=epochs,
-        #                         validation_data = (X_test,y_test), callbacks = [ckpt])
+        our_model = models.ffn(dataset)
+        files='Model.{epoch:02d}-{val_acc:.4f}.hdf5'
+        ckpt = keras.callbacks.ModelCheckpoint(files, monitor = 'val_loss',verbose=1, save_best_only=True, mode='auto')
+        our_model.fit_generator(generate.flow(X_train, y_train), steps_per_epoch = X_train.shape[0], epochs=epochs,
+                                validation_data = (X_test,y_test), callbacks = [ckpt])
 
     # test run on the test classes
     if mode == 'TEST':
