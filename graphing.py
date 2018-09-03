@@ -2,96 +2,54 @@ import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 import p_m
+from scipy.stats import ks_2samp
+
 
 # ============ MAIN ===============
 
 def main():
 
-    w1 = np.genfromtxt ('./weights_3/weights_16_1_zero.csv', delimiter=",")
-    # w2 = np.genfromtxt ('weights2.csv', delimiter=",")
-    # print('w1 dimensions:',len(w1),'x',len(w1[0]))
-    # print('w2 dimensions:',len(w2),'x',len(w2[0]))
+    w1 = np.genfromtxt('./math_dsfweights_lky/weights_128_1.csv',delimiter=",")
+    w2 = np.genfromtxt('./math_annweights_lky/weights_128_1.csv',delimiter=",")
+    neurons = 16
 
-    # image = np.reshape(w1[:,3],(28,28))
-    save_covariance = False
-    run_metrics = False
-    graph_components = True
-    graph_average = False
-    graph_multi_avg = False
+    w3 = p_m.floor(w2) #w3 is the non-negative component matrix of the ANN matrix
+    im_size = 32
 
-    sizes = ([1024,512,256,128,64,32,16])
+    # p_m.graphing(im_size, save_covariance = False, run_metrics = False, graph_components = False, graph_report = True,w1 = w1,w2=w2)
 
+    ent1 = p_m.bin_total_entropy(w1)
+    ent2 = p_m.bin_total_entropy(w2)
+    ent3 = p_m.bin_total_entropy(w3)
 
-    #  Graphing the components, here we can graph a variable number of the graphs individually
-    if (graph_components==True):
-        n_points = 28
-        a = np.linspace(1, 28, n_points)
-        b = np.linspace(1, 28, n_points)
-        a, b = np.meshgrid(a,b)
-        offset = 0
-        dim = 4
-        fig,ax = plt.subplots(dim,dim)
-        # cbar_ax = fig.add_axes([-1.0, 0.2, 1.0, 0.7])
-        i = 0
-        for sub in ax:
-            for subi in sub:
-                p_m.plot(subi,b,a,i,w1,offset)
-                subi.get_xaxis().set_visible(False)
-                subi.get_yaxis().set_visible(False)
-                i=i+1
-        plt.show()
+    # p_m.gauss_fit(ent1)
+    # p_m.gauss_fit(ent2)
 
-    if (run_metrics==True):
-        mean, cov = p_m.metrics(w1)
-
-    if (graph_average==True and run_metrics==False):
-        mean = p_m.mean(w1)
-
-    if (save_covariance==True):
-        np.savetxt("cov.csv", cov, delimiter=",")
-        # mean_image = np.reshape(mean,(28,28))
-        fig,ax = plt.subplots(1,1)
-        n_points = 128
-        a = np.linspace(1, 128, n_points)
-        b = np.linspace(1, 128, n_points)
-        a, b = np.meshgrid(a, b)
-        im = ax.pcolormesh(a, -b, cov)
-        ax.axis('tight')
-        plt.show()
-    # ================================================
-
-    # Printing the average image
-    # print(diff)
-    if (graph_average==True):
-        mean_image = np.reshape(mean,(28,28))
-        fig,ax = plt.subplots(1,1)
-        n_points = 28
-        a = np.linspace(1, 28, n_points)
-        b = np.linspace(1, 28, n_points)
-        a, b = np.meshgrid(a, b)
-        im = ax.pcolormesh(a, -b, mean_image)
-        ax.axis('tight')
-        plt.show()
-
-    if (graph_multi_avg==True):
-
-            fig,ax = plt.subplots(1,len(sizes))
-            n_points = 28
-            a = np.linspace(1, 28, n_points)
-            b = np.linspace(1, 28, n_points)
-            a, b = np.meshgrid(a, b)
-
-            i = 0
-            for sub in ax:
-                file = './weights_1/weights_%s_1.csv'%sizes[i]
-                weight = np.genfromtxt (file, delimiter=",")
-                mean = p_m.mean(weight)
-                p_m.meanplot(sub,b,a,i,mean,sizes)
-                sub.get_xaxis().set_visible(False)
-                sub.get_yaxis().set_visible(False)
-                i=i+1
-            fig.suptitle("Mean Images for Hidden Neurons", fontsize=16)
-            plt.show()
+    entropies = np.zeros((3,len(ent1[0])),dtype = float)
+    entropies[0]=ent1
+    entropies[1]=ent2
+    entropies[2]=ent3
+    # np.savetxt("./REUTERS/entropies_%s.csv"%str(neurons),entropies, delimiter=",")
+    # #
+    # #
+    means = np.zeros((3,1),dtype = float)
+    stdevs = np.zeros((3,1),dtype = float)
+    #
+    for j in range(0,3):
+        means[j] = np.mean(entropies[j])
+        stdevs[j] = np.std(entropies[j])
+        print("w%s: mean - "%j, means[j],", stdev - ",stdevs[j] )
+    #
+    # entropies = np.genfromtxt('./REUTERS/entropies_32.csv',delimiter=",")
+    # ent1 = entropies[0]
+    # ent2 = entropies[1]
+    # ent3 = entropies[2]
+    # print("Averages: w1:",entropies[0].mean(),", w2: ",entropies[1].mean(),", w3: ",entropies[2].mean())
+    # #
+    # # # #
+    # print(ks_2samp(np.ndarray.flatten(ent1), np.ndarray.flatten(ent2)))
+    # print(ks_2samp(np.ndarray.flatten(ent1), np.ndarray.flatten(ent3)))
+    # print(ks_2samp(ent1, ent3))
 
 
 
