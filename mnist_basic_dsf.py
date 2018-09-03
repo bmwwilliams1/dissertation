@@ -40,7 +40,7 @@ def main():
     # TRAIN, TEST or SAVE
     mode = 'SAVE'
     dataset = 'REUT'
-    load_name = 'Model.01-0.9699_train9910_32.hdf5'
+    load_name = 'Model.ffn512.01-0.5500.hdf5'
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # ~~~~~~~~~~~~~~~~~~~~~~~~ DEAL WITH THE DATA ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -134,7 +134,7 @@ def main():
             if (layer.get_config()["name"].startswith("dense")):
                 weights = layer.get_weights() # list of numpy arrays
                 print('weights dimensions: ',len(weights[0]),'x',len(weights[0][0]))
-                np.savetxt("weights_FFN_%s.csv"%str(i),weights[0], delimiter=",")
+                np.savetxt("weights_mathffn512_%s.csv"%str(i),weights[0], delimiter=",")
                 i=i+1
 
     if mode == 'SUMMARY':

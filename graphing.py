@@ -9,8 +9,8 @@ from scipy.stats import ks_2samp
 
 def main():
 
-    w1 = np.genfromtxt('./math_dsfweights_lky/weights_128_1.csv',delimiter=",")
-    w2 = np.genfromtxt('./math_annweights_lky/weights_128_1.csv',delimiter=",")
+    w1 = np.genfromtxt('./dsf_wt/weights_mathdsf512_1.csv',delimiter=",")
+    w2 = np.genfromtxt('./ffn_wt/weights_512_1.csv',delimiter=",")
     neurons = 16
 
     w3 = p_m.floor(w2) #w3 is the non-negative component matrix of the ANN matrix
@@ -44,7 +44,7 @@ def main():
     # ent1 = entropies[0]
     # ent2 = entropies[1]
     # ent3 = entropies[2]
-    # print("Averages: w1:",entropies[0].mean(),", w2: ",entropies[1].mean(),", w3: ",entropies[2].mean())
+    print("Averages: w1:",entropies[0].mean(),", w2: ",entropies[1].mean(),", w3: ",entropies[2].mean())
     # #
     # # # #
     # print(ks_2samp(np.ndarray.flatten(ent1), np.ndarray.flatten(ent2)))
